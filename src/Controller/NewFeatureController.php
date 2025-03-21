@@ -31,4 +31,14 @@ class NewFeatureController extends AbstractController
     {
         
     }
+
+    private function b(): int
+    {
+        return 0;
+    }
+
+    private function c(): array
+    {
+        return [];
+    }
 }
