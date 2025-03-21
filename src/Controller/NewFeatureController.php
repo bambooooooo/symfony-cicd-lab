@@ -26,19 +26,4 @@ class NewFeatureController extends AbstractController
     {
         return new Response('Ok', Response::HTTP_OK);
     }
-
-    private function a(): void
-    {
-        
-    }
-
-    private function b(): int
-    {
-        return 0;
-    }
-
-    private function c(): array
-    {
-        return [];
-    }
 }
