@@ -31,4 +31,9 @@ class NewFeatureController extends AbstractController
     {
         return 0;
     }
+
+    private function c(): array
+    {
+        return [];
+    }
 }
