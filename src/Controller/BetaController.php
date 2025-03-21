@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BetaController extends AbstractController
 {
-    #[Route(path:"alfa", name:"alfa")]
+    #[Route(path:"beta", name:"beta")]
     public function index(Request $request){
         return new Response("Ok. Beta", Response::HTTP_OK);
     }
