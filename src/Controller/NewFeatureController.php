@@ -14,6 +14,12 @@ class NewFeatureController extends AbstractController
     {
         return new Response('<html><body>Nowa funkcja działa!</body></html>');
     }
+
+    #[Route('manual', name:'manual')]
+    public function manualAction(): Response
+    {
+        return new Response('Manual here', Response::HTTP_OK);
+    }
     
     #[Route('/status', name:'staus')]
     public function statusAction(Request $request): Response
