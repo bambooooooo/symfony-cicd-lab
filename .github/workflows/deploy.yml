@@ -13,21 +13,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: SSH setup
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      - name: Add SSH private key to agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Ensure this secret contains the new private key
 
-      - name: Deploy
+      - name: Deploy to Server
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd /var/www/html
-            git pull origin master
-            composer install --no-dev --opitimize-autoloader
-            php bin/console doctrine:migrations:migrate --no-interaction
-            php bin/console cache:clear
-            php bin/console cache:warmup
-            sudo systemctl restart php8.2-fpm
-          EOF
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $SERVER_USER@$SERVER_IP "
+          cd ~ &&
+          git remote set-url origin git@github.com:bambooooooo/symfony-cicd-lab.git &&
+          git pull origin master
