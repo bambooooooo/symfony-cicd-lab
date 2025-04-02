@@ -24,5 +24,7 @@ jobs:
           script: |
             cd ~/pimcore
             git pull origin master
+            git checkout master
+            git log -n 1 --pretty='format:%h'
 
           
